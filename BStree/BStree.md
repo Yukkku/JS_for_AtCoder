@@ -2,8 +2,6 @@
 二分探索木です。``new BStree()``で使えます。
 ## ``BStree.add(node)``
 要素を追加します。追加されたら``true``を返し、既に同じ要素があったりしたら``false``を返して追加しません。
-## ``BStree.indexOf(node)``
-要素の位置を判定します。存在しない場合は``-1``を返します。
 ## ``BStree.getnth(n)``
 小さい方から見てn個目の要素を返します。0から始まります。
 ## ``BStree.indexOf(node)``
