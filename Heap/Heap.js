@@ -12,6 +12,7 @@ class Heap{
       }else{
         this.r.add(n)
       }
+      this.length++
     }else{
       this.length=1
       this.min=n
@@ -27,6 +28,7 @@ class Heap{
       }else{
         this.min=this.l.popmin()
       }
+      this.length--
       return m
     }else{
       return
