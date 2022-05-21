@@ -32,7 +32,7 @@ class BStree{
       if(n==f){
         return this.r
       }else{
-        return n>f?this.l.getnth(s-f-1):this.s.getnth(n)
+        return n>f?this.l.getnth(n-f-1):this.s.getnth(n)
       }
     }
   }
