@@ -1,0 +1,1 @@
+class Heap{constructor(){this.length=0}add(n){this.length?(this.min>n&&([n,this.min]=[this.min,n]),this.r.length>this.l.length?this.l.add(n):this.r.add(n),this.length++):(this.length=1,this.min=n,this.r=new Heap,this.l=new Heap)}popmin(){if(this.length){let n=this.min;return this.min=this.r.length>this.l.length?this.r.popmin():this.l.popmin(),this.length--,n}return}}
