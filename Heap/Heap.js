@@ -23,12 +23,17 @@ class Heap{
   popmin(){
     if(this.length){
       let m=this.min
-      if(this.r.length>this.l.length){
+      if(!this.l.length || (this.r.length && this.r.min<this.l.min)){
         this.min=this.r.popmin()
       }else{
         this.min=this.l.popmin()
       }
       this.length--
+      if(!this.length){
+        delete this.min
+        delete this.l
+        delete this.r
+      }
       return m
     }else{
       return
