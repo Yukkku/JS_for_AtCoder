@@ -74,7 +74,8 @@ class BStree{
           this.s=new BStree()
         }
       }else{
-        (n>this.r?this.l:this.s).delete(n) && this.set()
+        (n>this.r?this.l:this.s).delete(n) 
+        this.set()
       }
     }else return false
   }
