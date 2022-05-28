@@ -120,8 +120,8 @@ class BStree{
         this.s=ns
         this.l=nl
       }
-      this.h=Math.max(this.l.h,this.s.h)+1
-      this.length=this.l.length+this.s.length+1
     }
+    this.h=Math.max(this.l.h,this.s.h)+1
+    this.length=this.l.length+this.s.length+1
   }
 }
