@@ -1,5 +1,4 @@
 //AVL treeを実装
-
 class BStree{
   constructor(c){
     this.h=0
@@ -127,22 +126,3 @@ class BStree{
     this.length=this.l.length+this.s.length+1
   }
 }
-
-let [[z],...q]=require("fs").readFileSync("/dev/stdin","utf8").trim().split("\n")
-  .map(i=>i.trim().split(/\s+/).map(i=>isNaN(i)?i:i-0)),k={},s=new BStree()
-q.forEach(x=>{
-  if(x[0]==1){
-    s.add(x[1])
-    k[x[1]]=(k[x[1]]||0)+1
-  }else if(x[0]==2){
-    k[x[1]]=(k[x[1]]||0)
-    if(x[2]>=k[x[1]]){
-      s.delete(x[1])
-      delete k[x[1]]
-    }else{
-      k[x[1]]-=x[2]
-    }
-  }else{
-    console.log(s.getnth(s.length-1) - s.getnth(0))
-  }
-})
