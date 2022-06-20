@@ -1,5 +1,5 @@
 # BStree
-二分探索木です。``new BStree()``で使えます。
+二分探索木です。``new BStree(func)``で使えます。`func`は比較する関数で、指定されなかった場合は`(a,b)=>a-b`になります。
 ## ``BStree.add(node)``
 要素を追加します。追加されたら``true``を返し、既に同じ要素があったりしたら``false``を返して追加しません。
 ## ``BStree.getnth(n)``
