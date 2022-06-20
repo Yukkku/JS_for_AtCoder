@@ -1,16 +1,17 @@
 //AVL treeを実装
 
 class BStree{
-  constructor(){
+  constructor(c){
     this.h=0
     this.length=0
+    this.compare=c||((a,b)=>a-b)
   }
   add(n){
     if(this.h){
       let f
-      if(n>this.r){
+      if(this.compare(n,this.r)>0){
         f=this.l.add(n)
-      }else if(n<this.r){
+      }else if(this.compare(n,this.r)<0){
         f=this.s.add(n)
       }else{
        return false
@@ -21,8 +22,8 @@ class BStree{
       this.r=n
       this.h=1
       this.length=1
-      this.s=new BStree()
-      this.l=new BStree()
+      this.s=new BStree(this.compare)
+      this.l=new BStree(this.compare)
       return true
     }
   }
@@ -38,11 +39,11 @@ class BStree{
   }
   indexOf(n){
     if(this.h){
-      if(n==this.r){
+      if(this.compare(n,this.r)==0){
         return this.s.length
-      }else if(n<this.r){
+      }else if(this.compare(n,this.r)<0){
         return this.s.indexOf(n)
-      }else if(n>this.r){
+      }else if(this.compare(n,this.r)>0){
         return this.s.length+1+this.l.indexOf(n)
       }else{
         return -1
@@ -53,7 +54,7 @@ class BStree{
   }
   delete(n){
     if(this.h){
-      if(this.r==n){
+      if(this.compare(n,this.r)==0){
         if(this.h==1){
           delete this.r
           delete this.l
@@ -71,10 +72,10 @@ class BStree{
           this.r=this.s.r
           this.h=1
           this.length=1
-          this.s=new BStree()
+          this.s=new BStree(this.compare)
         }
       }else{
-        (n>this.r?this.l:this.s).delete(n) 
+        (this.compare(n,this.r)>0?this.l:this.s).delete(n) 
         this.set()
       }
     }else return false
@@ -83,8 +84,8 @@ class BStree{
     if(this.h){
       let f=this.l.h-this.s.h  //平衡係数
       if(Math.abs(f)==2){
-        let nl=new BStree(),
-            ns=new BStree()
+        let nl=new BStree(this.compare),
+            ns=new BStree(this.compare)
         if(f==2){
           ns.s=this.s
           ns.r=this.r
@@ -126,3 +127,22 @@ class BStree{
     this.length=this.l.length+this.s.length+1
   }
 }
+
+let [[z],...q]=require("fs").readFileSync("/dev/stdin","utf8").trim().split("\n")
+  .map(i=>i.trim().split(/\s+/).map(i=>isNaN(i)?i:i-0)),k={},s=new BStree()
+q.forEach(x=>{
+  if(x[0]==1){
+    s.add(x[1])
+    k[x[1]]=(k[x[1]]||0)+1
+  }else if(x[0]==2){
+    k[x[1]]=(k[x[1]]||0)
+    if(x[2]>=k[x[1]]){
+      s.delete(x[1])
+      delete k[x[1]]
+    }else{
+      k[x[1]]-=x[2]
+    }
+  }else{
+    console.log(s.getnth(s.length-1) - s.getnth(0))
+  }
+})
