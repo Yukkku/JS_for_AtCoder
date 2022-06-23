@@ -1,3 +1,4 @@
+//Segment Tree
 class SegmentTree{
   constructor(l,f,e){
     this.t=[l]
@@ -8,7 +9,6 @@ class SegmentTree{
       for(let i=0;i<l.length-1;i+=2){
         n.push(this.f(l[i],l[i+1]))
       }
-      if(l.length%2) n.push(l[l.length-1])
       this.t.push(n)
       l=n
     }
@@ -16,13 +16,13 @@ class SegmentTree{
   set(i,v){
     this.t.forEach((x,j)=>{
       if(j==0) x[i]=v
-      else x[i]=this.f(this.t[j-1][i*2],this.t[j-1][i*2+1])
+      else if(x.length>i) x[i]=this.f(this.t[j-1][i*2],this.t[j-1][i*2+1])
       i=Math.floor(i/2)
     })
   }
   get(s,e){
     s=Math.max(s,0)
-    e=Math.min(e,this.t.length)
+    e=Math.min(e,this.t[0].length)
     let a=this.e
     while(s<e){
       let g=1
