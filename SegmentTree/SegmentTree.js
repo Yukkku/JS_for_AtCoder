@@ -1,9 +1,10 @@
 //Segment Tree
-class SegmentTree{
+class SegTree{
   constructor(l,f,e){
     this.t=[l]
     this.f=f||Math.min
     this.e=f?e:Infinity
+    this.l=l.length
     while(l.length>1){
       let n=[]
       for(let i=0;i<l.length-1;i+=2){
@@ -12,22 +13,31 @@ class SegmentTree{
       this.t.push(n)
       l=n
     }
+    this.h=this.t.length
   }
-  set(i,v){
-    this.t.forEach((x,j)=>{
-      if(j==0) x[i]=v
-      else if(x.length>i) x[i]=this.f(this.t[j-1][i*2],this.t[j-1][i*2+1])
+  update(i,v){
+    this.t[0][i]=v
+    for(let j=1;j<this.h;j++){
       i=Math.floor(i/2)
-    })
+      if(i>=this.t[j].length) break
+      let p=this.f(this.t[j-1][i*2],this.t[j-1][i*2+1])
+      if(this.t[j][i]==p) break
+      else this.t[j][i]=p
+    }
   }
   get(s,e){
     s=Math.max(s,0)
-    e=Math.min(e,this.t[0].length)
+    e=Math.min(e,this.l)
     let a=this.e
-    while(s<e){
-      let g=1
+    let g=0
+    while(s+2**g<e){
       while((s/2**g)%1==0&&s+2**g<=e) g++
       g--
+      a=this.f(a,this.t[g][s/2**g])
+      s+=2**g
+    }
+    while(s<e){
+      while(s+2**g>e) g--
       a=this.f(a,this.t[g][s/2**g])
       s+=2**g
     }
